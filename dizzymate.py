@@ -1,7 +1,3 @@
-# ---------------------------------------------------
-# TELEGRAM AURA BOT - SQLite3 Version
-# ---------------------------------------------------
-
 import os
 import logging
 import random
