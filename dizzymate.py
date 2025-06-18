@@ -633,31 +633,28 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     add_or_update_user(**user_info)
 
     start_message = f"""
-⚡️ <b>Welcome to Aura Bot</b> ⚡️
+😎 <b>Yo {get_user_mention_html(user)}!</b>  
+U just unlocked the grindset. Let’s farm that aura like a menace 💀
 
-😎 Yo {get_user_mention_html(user)}! You made it. Time to farm aura like a menace 💀
+🔥 <b>What u get:</b>  
+• Daily drops → title, fame, stats  
+• Flex ur aura on the charts  
+• Command wars: simp? sigma? sus?
 
-🔥 <b>What’s the move?</b>
-• Drop daily commands and get titled like a boss  
-• Stack aura, flex stats, dominate leaderboards  
-• Compete, clown or crown — your grind, your rep
+🎯 <b>Main Moves:</b>  
+/gay – Rainbow drip drop  
+/couple – Duo of the day  
+/simp – Simp alert  
+/toxic – Vibe killer tag  
+/cringe – Embarrass 'em  
+/respect – Real one badge  
+/sus – Suspicion check  
+/ghost – Nightfall aura  
+/aura – Daily farmer stats
 
-🎮 <b>Power Commands:</b>  
-/gay – Daily rainbow drop 🏳️‍🌈  
-/couple – Find the duo of the day 💕  
-/simp – Expose the biggest simp 🥺  
-/toxic – Spot the vibe killer ☠️  
-/cringe – Certified cringe moment 😬  
-/respect – Real one check 🫡  
-/sus – Suspicion levels rising 📮  
-/ghost – Night creep unlock 👻  
-/aura – Farmer grind 📊
+⚠️ <i>1 command per user/day/group. Pick wisely.</i>  
 
-📜 <b>Quick Info:</b>  
-One command per user, per day, per group.  
-Some give aura, some take it. Choose wisely.  
-
-🗿 Farm up. Flex hard. Stay legendary. 📈
+🗿 Let the aura speak. Flex loud. Stay alpha.
 """
 
     keyboard = [
