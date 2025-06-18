@@ -548,59 +548,77 @@ async def typing_action(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def collect_group_members(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Collect group members data when possible."""
-    if not update.effective_chat or update.effective_chat.type in ['private']:
+    if update.effective_chat.type in ['private']:
         return
-    
+
     chat_id = update.effective_chat.id
-    
     try:
-        # Try to get chat member count
-        member_count = await context.bot.get_chat_member_count(chat_id)
-        logger.info(f"Chat {chat_id} has {member_count} members")
+        # Check if bot is admin first
+        bot_member = await context.bot.get_chat_member(chat_id, context.bot.id)
+        if bot_member.status in ['administrator', 'creator']:
+            # Bot is admin, can collect member list
+            try:
+                chat_member_count = await context.bot.get_chat_member_count(chat_id)
+                logger.info(f"Chat {chat_id} has {chat_member_count} total members")
+                if chat_member_count <= MAX_MEMBERS_PER_BATCH:
+                    # Telegram Bot API doesn't provide direct member enumeration
+                    pass
+            except Exception as e:
+                logger.warning(f"Could not get member count for chat {chat_id}: {e}")
+
+        # Get chat administrators (always available)
+        administrators = await context.bot.get_chat_administrators(chat_id)
+        for admin in administrators:
+            if admin.user and not admin.user.is_bot:
+                user_info = extract_user_info(admin.user)
+                add_or_update_user(**user_info)
+                add_chat_member(chat_id, admin.user.id, admin.status)
+        logger.info(f"Collected {len(administrators)} administrators for chat {chat_id}")
     except Exception as e:
-        logger.warning(f"Could not get member count for chat {chat_id}: {e}")
+        logger.warning(f"Could not collect group members for chat {chat_id}: {e}")
 
 async def handle_new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle new chat members."""
     if not update.message or not update.message.new_chat_members:
         return
-    
+
     chat_id = update.effective_chat.id
-    
-    for new_member in update.message.new_chat_members:
-        if not new_member.is_bot:
-            user_info = extract_user_info(new_member)
+    for member in update.message.new_chat_members:
+        if not member.is_bot:
+            user_info = extract_user_info(member)
             add_or_update_user(**user_info)
-            add_chat_member(chat_id, new_member.id, 'member')
-            logger.info(f"New member {new_member.first_name} joined chat {chat_id}")
+            add_chat_member(chat_id, member.id, 'member')
+            logger.info(f"Added new member {member.id} to chat {chat_id}")
 
 async def handle_member_left(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle member leaving chat."""
     if not update.message or not update.message.left_chat_member:
         return
-    
+
     chat_id = update.effective_chat.id
-    left_member = update.message.left_chat_member
-    
-    if not left_member.is_bot:
-        add_chat_member(chat_id, left_member.id, 'left')
-        logger.info(f"Member {left_member.first_name} left chat {chat_id}")
+    user_id = update.message.left_chat_member.id
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        UPDATE chat_members 
+        SET status = 'left' 
+        WHERE chat_id = ? AND user_id = ?
+    ''', (chat_id, user_id))
+    conn.commit()
+    logger.info(f"Member {user_id} left chat {chat_id}")
 
 async def track_message_activity(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Track user message activity for better member data collection."""
-    if not update.effective_user or not update.effective_chat:
+    if not update.effective_user or update.effective_user.is_bot:
         return
-    
-    if update.effective_chat.type in ['private']:
+    if update.effective_chat.type == 'private':
         return
-    
+
     user = update.effective_user
     chat_id = update.effective_chat.id
-    
-    if not user.is_bot:
-        user_info = extract_user_info(user)
-        add_or_update_user(**user_info)
-        update_member_activity(chat_id, user.id)
+    user_info = extract_user_info(user)
+    add_or_update_user(**user_info)
+    update_member_activity(chat_id, user.id)
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /start command."""
