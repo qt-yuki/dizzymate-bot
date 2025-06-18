@@ -722,7 +722,7 @@ async def handle_single_user_command(update: Update, context: ContextTypes.DEFAU
             await update.message.reply_text(
                 f"⏳ You already ran /{command} today. Come back stronger tomorrow 👑"
             )
-    return
+		return
     
     # Check if we already have today's selection
     existing_selection = get_daily_selection(chat_id, command)
