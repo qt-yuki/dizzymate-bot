@@ -6,7 +6,6 @@ import os
 import logging
 import random
 import asyncio
-import threading
 import json
 import sqlite3
 from datetime import datetime, date, time, timedelta
@@ -28,6 +27,10 @@ from telegram.ext import (
     filters,
     ContextTypes,
 )
+
+# ─── Imports for Dummy HTTP Server ──────────────────────────────────────────
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 # Configure logging
 logging.basicConfig(
@@ -1123,6 +1126,23 @@ async def on_startup(application: Application) -> None:
     await application.bot.set_my_commands(commands)
     logger.info("Bot commands registered successfully")
 
+ # ─── Dummy HTTP Server to Keep Render Happy ─────────────────────────────────
+class DummyHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"AFK bot is alive!")
+
+    def do_HEAD(self):
+        self.send_response(200)
+        self.end_headers()
+
+def start_dummy_server():
+    port = int(os.environ.get("PORT", 10000))  # Render injects this
+    server = HTTPServer(("0.0.0.0", port), DummyHandler)
+    print(f"Dummy server listening on port {port}")
+    server.serve_forever()
+
 def main():
     """Start the bot."""
     # Initialize database
@@ -1170,4 +1190,6 @@ def main():
     application.run_polling(drop_pending_updates=True)
 
 if __name__ == '__main__':
+    # Start dummy HTTP server (needed for Render health check)
+    threading.Thread(target=start_dummy_server, daemon=True).start()
     main()
