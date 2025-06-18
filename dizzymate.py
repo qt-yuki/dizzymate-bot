@@ -970,12 +970,12 @@ async def ghost_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if reason == 'hourly_limit':
             await update.message.reply_text(
                 f"⏰ Spirits gotta recharge! Hold up an hour before you summon again..."
-)
-		else:
-    		await update.message.reply_text(
-     		   f"👻 Ghost’s already been summoned today! They’re coming back tomorrow, so chill for now..."
-    )
-return
+            )
+        else:
+            await update.message.reply_text(
+                f"👻 Ghost’s already been summoned today! They’re coming back tomorrow, so chill for now..."
+            )
+        return
     
     # Check if we already have today's selection
     existing_selection = get_daily_selection(chat_id, command)
