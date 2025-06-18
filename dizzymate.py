@@ -62,44 +62,44 @@ AURA_POINTS = {
 # Command messages
 COMMAND_MESSAGES = {
     'gay': [
-        "🏳️‍🌈 Today's Gay of the Day is {user}! 🌈✨",
-        "🏳️‍🌈 Congratulations {user}, you're the fabulous Gay of the Day! 💅✨",
-        "🌈 {user} has been crowned the Gay of the Day! 🏳️‍🌈👑"
+        "🏳️‍🌈 W bro. {user} got picked. Gay of the Day unlocked 💅",
+        "🏳️‍🌈 {user} just dropped the ‘I love men’ update 💀",
+        "🌈 Daily gay vibes sponsored by {user} ✨"
     ],
     'couple': [
-        "💕 Today's adorable couple is {user1} and {user2}! 💑✨",
-        "❤️ Love is in the air! {user1} and {user2} are today's couple! 💕🥰",
-        "👫 {user1} and {user2} make the perfect couple today! 💖✨"
+        "💕 Everyone’s single except {user1} & {user2} flexing hard 💑",
+        "❤️ {user1} + {user2} = today’s cringe love story 🥰",
+        "👫 Caught in 4K: {user1} & {user2} being cute or whateva 💖"
     ],
     'simp': [
-        "🥺 {user} is today's biggest simp! 💸👑",
-        "😍 Behold the ultimate simp of the day: {user}! 🥺💕",
-        "👑 {user} has achieved maximum simp level today! 🥺✨"
+        "🥺 {user} just donated his spine. Certified simp 👑",
+        "😍 {user} risked it all for a 'hey'. Down bad 💸",
+        "👑 Daily simp radar beeping at {user} 🥺"
     ],
     'toxic': [
-        "☠️ {user} is spreading toxic vibes today! 🤢💀",
-        "🧪 Warning: {user} is today's most toxic member! ☠️⚠️",
-        "💀 {user} wins the toxic award of the day! 🧪☠️"
+        "☠️ {user} woke up and chose biohazard 💀",
+        "🧪 {user} broke the toxicity meter. Stay back ☣️",
+        "💀 PSA: {user} is pure villain arc today ⚠️"
     ],
     'cringe': [
-        "😬 {user} is today's cringe master! 🤡💀",
-        "🤢 Maximum cringe level achieved by {user}! 😬🤡",
-        "💀 {user} made everyone cringe today! 😬✨"
+        "😬 {user} out here embarrassing humanity again 🤡",
+        "🤢 {user} just made the whole group facepalm 😬",
+        "💀 {user} got zero chill. Certified cringe ✨"
     ],
     'respect': [
-        "🫡 Infinite respect for {user}! 👑✨",
-        "🙏 {user} deserves all the respect today! 🫡💫",
-        "👑 Mad respect for {user}! 🙏✨"
+        "🫡 {user} carried the whole squad on their back 👑",
+        "🙏 Mad sigma energy from {user} today 💫",
+        "👑 All rise for {user}, real one detected ✨"
     ],
     'sus': [
-        "📮 {user} is acting pretty sus today! 👀🔍",
-        "🤔 {user} looking sus af! 📮👀",
-        "👀 Emergency meeting! {user} is sus! 📮🚨"
+        "📮 {user} moving mad sus lately 👀",
+        "🤔 {user} looking like they vented 5 mins ago 📮",
+        "👀 Emergency meeting. {user} acting shady 🚨"
     ],
     'ghost': [
-        "👻 {user} is tonight's spooky ghost! 🌙💀",
-        "🌙 {user} haunts the darkness tonight! 👻⚰️",
-        "💀 {user} emerges from the shadows! 👻🌑"
+        "👻 {user} vanished like my will to live 💀",
+        "🌙 {user} lurking like a certified NPC 👻",
+        "💀 {user} pulled a Casper. Gone without a ping 🌑"
     ]
 }
 
@@ -491,14 +491,14 @@ def select_random_users_seeded(users, count=1, seed=None, exclude=None):
 # ---------------------------------------------------
 
 def format_aura_leaderboard(leaderboard_data, chat_title=None):
-    """Format aura leaderboard message."""
+    """Format aura leaderboard message with Gen Z Sigma energy."""
     if not leaderboard_data:
-        return "📊 <b>Aura Leaderboard</b> 📊\n\n❌ No data available yet! Use some commands to get started! 🚀"
+        return "📈 <b>Aura Farmers</b> 📈\n\n💀 Zero aura. Zero ambition. Fix that, king 👑"
 
-    title = "📊 <b>Aura Leaderboard</b>"
+    title = "📈 <b>Aura Farmers</b>"
     if chat_title:
         title += f" - <b>{chat_title}</b>"
-    title += " 📊\n\n"
+    title += " 📈\n\n"
 
     leaderboard_text = title
     medals = ["🥇", "🥈", "🥉"]
@@ -511,11 +511,11 @@ def format_aura_leaderboard(leaderboard_data, chat_title=None):
         aura = user["aura_points"]
         if position <= 3:
             medal = medals[position - 1]
-            leaderboard_text += f"{medal} {user_mention}: <b>{aura}</b> aura\n"
+            leaderboard_text += f"{medal} {user_mention}: <b>{aura}</b> Aura\n"
         else:
-            leaderboard_text += f"🏅 {user_mention}: <b>{aura}</b> aura\n"
+            leaderboard_text += f"🏅 {user_mention}: <b>{aura}</b> Aura\n"
 
-    leaderboard_text += "\n💡 Use commands to gain or lose aura points!"
+    leaderboard_text += "\n💡 Wanna farm harder? Drop some commands and flex higher ⚡️"
     return leaderboard_text
 
 # ---------------------------------------------------
@@ -619,32 +619,32 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     add_or_update_user(**user_info)
 
     start_message = f"""
-🎉 <b>Welcome to Aura Bot!</b> 🎉
+⚡️ <b>Welcome to Aura Bot</b> ⚡️
 
-Hello {get_user_mention_html(user)}! 👋
+😎 Yo {get_user_mention_html(user)}! You made it. Time to farm aura like a menace 💀
 
-🌟 <b>What can I do?</b>
-• Use fun commands to assign daily titles  
-• Track aura points for group activities  
-• Show leaderboards and statistics
+🔥 <b>What’s the move?</b>
+• Drop daily commands and get titled like a boss  
+• Stack aura, flex stats, dominate leaderboards  
+• Compete, clown or crown — your grind, your rep
 
-🎮 <b>Available Commands:</b>  
-/gay - Find today's Gay of the Day 🏳️‍🌈  
-/couple - Discover today's perfect couple 💕  
-/simp - Crown the biggest simp 🥺  
-/toxic - Identify the toxic member ☠️  
-/cringe - Find the cringe master 😬  
-/respect - Show ultimate respect 🫡  
-/sus - Spot suspicious behavior 📮  
-/ghost - Nighttime spooky selection 👻  
-/aura - View the aura leaderboard 📊
+🎮 <b>Power Commands:</b>  
+/gay – Daily rainbow drop 🏳️‍🌈  
+/couple – Find the duo of the day 💕  
+/simp – Expose the biggest simp 🥺  
+/toxic – Spot the vibe killer ☠️  
+/cringe – Certified cringe moment 😬  
+/respect – Real one check 🫡  
+/sus – Suspicion levels rising 📮  
+/ghost – Night creep unlock 👻  
+/aura – Farmer grind 📊
 
-💫 <b>How it works:</b>  
-Commands can only be used once per day per user in each group.  
-Some commands give positive aura points, others negative!
+📜 <b>Quick Info:</b>  
+One command per user, per day, per group.  
+Some give aura, some take it. Choose wisely.  
 
-Have fun and may your aura be strong! ✨
-    """
+🗿 Farm up. Flex hard. Stay legendary. 📈
+"""
 
     keyboard = [
         [
@@ -699,7 +699,7 @@ async def handle_single_user_command(update: Update, context: ContextTypes.DEFAU
     # Only work in groups
     if update.effective_chat.type == 'private':
         await update.message.reply_text(
-            "❌ This command only works in groups! Add me to a group to use aura commands."
+            "💀 This move’s for bosses in groups. Link me up and set fire to that aura. 🔥"
         )
         return
     
@@ -720,13 +720,13 @@ async def handle_single_user_command(update: Update, context: ContextTypes.DEFAU
     if not can_use:
         if reason == 'hourly_limit':
             await update.message.reply_text(
-                f"⏰ Hold up! You need to wait an hour before using /{command} again!"
-            )
-        else:
-            await update.message.reply_text(
-                f"⏰ You've already used /{command} today! Come back tomorrow for a new selection!"
-            )
-        return
+                f"⏳ Patience, boss! Wait an hour before hitting /{command} again 🦾"
+)
+else:
+    await update.message.reply_text(
+        f"⏳ You already ran /{command} today. Come back stronger tomorrow 👑"
+    )
+return
     
     # Check if we already have today's selection
     existing_selection = get_daily_selection(chat_id, command)
@@ -761,7 +761,7 @@ async def handle_single_user_command(update: Update, context: ContextTypes.DEFAU
     
     if len(active_members) < 1:
         await update.message.reply_text(
-            "❌ Not enough active members in this chat to use this command!"
+            "💀 Can’t run this solo. Bring more energy to the chat 🦾"
         )
         return
     
@@ -771,7 +771,7 @@ async def handle_single_user_command(update: Update, context: ContextTypes.DEFAU
     
     if not selected_users:
         await update.message.reply_text(
-            "❌ Could not select a user. Try again later!"
+            "😬 No cap, couldn’t find a user. Try again later, fam!"
         )
         return
     
@@ -798,9 +798,9 @@ async def handle_single_user_command(update: Update, context: ContextTypes.DEFAU
     
     # Add aura change info
     if aura_change > 0:
-        final_message += f"\n\n✨ <b>+{aura_change} aura points!</b>"
-    else:
-        final_message += f"\n\n💔 <b>{aura_change} aura points!</b>"
+    final_message += f"\n\n🦾 <b>+{aura_change} aura points!</b> 👑"
+else:
+    final_message += f"\n\n💀 <b>{aura_change} aura points!</b> 🗡️"
     
     await update.message.reply_text(final_message, parse_mode=ParseMode.HTML)
     mark_command_used(user_id, chat_id, command)
@@ -813,7 +813,7 @@ async def handle_couple_command(update: Update, context: ContextTypes.DEFAULT_TY
     # Only work in groups
     if update.effective_chat.type == 'private':
         await update.message.reply_text(
-            "❌ This command only works in groups! Add me to a group to use aura commands."
+            "💀 This command’s for real squads only. Add me to a group and start the aura hustle 🦾"
         )
         return
     
@@ -835,13 +835,13 @@ async def handle_couple_command(update: Update, context: ContextTypes.DEFAULT_TY
     if not can_use:
         if reason == 'hourly_limit':
             await update.message.reply_text(
-                f"⏰ Hold up! You need to wait an hour before using /{command} again!"
-            )
-        else:
-            await update.message.reply_text(
-                f"⏰ You've already used /{command} today! Come back tomorrow for a new selection!"
-            )
-        return
+                f"⏳ Patience, boss! Wait an hour before hitting /{command} again 🦾"
+)
+		else:
+		    await update.message.reply_text(
+        f"⏳ You already ran /{command} today. Come back stronger tomorrow 👑"
+    )
+return
     
     # Check if we already have today's selection
     existing_selection = get_daily_selection(chat_id, command)
@@ -888,7 +888,7 @@ async def handle_couple_command(update: Update, context: ContextTypes.DEFAULT_TY
     
     if len(active_members) < 2:
         await update.message.reply_text(
-            "❌ Not enough active members in this chat to form a couple!"
+            "💀 Squad too light to form a couple here. Bring the real ones! 🦾"
         )
         return
     
@@ -898,7 +898,7 @@ async def handle_couple_command(update: Update, context: ContextTypes.DEFAULT_TY
     
     if len(selected_users) < 2:
         await update.message.reply_text(
-            "❌ Could not select a couple. Try again later!"
+            "😭 Couple vibes not loading. Give it another shot later! 🌹"
         )
         return
     
@@ -925,7 +925,7 @@ async def handle_couple_command(update: Update, context: ContextTypes.DEFAULT_TY
     final_message = message_template.format(user1=user1_mention, user2=user2_mention)
     
     # Add aura change info
-    final_message += f"\n\n✨ <b>Both get +{aura_change} aura points!</b>"
+    final_message += f"\n\n🫶 <b>Duo got +{aura_change} aura. Love stats rising 📈</b>"
     
     await update.message.reply_text(final_message, parse_mode=ParseMode.HTML)
     mark_command_used(user_id, chat_id, command)
@@ -938,7 +938,7 @@ async def ghost_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Only work in groups
     if update.effective_chat.type == 'private':
         await update.message.reply_text(
-            "❌ This command only works in groups! Add me to a group to use aura commands."
+            "💀 This ain’t a solo mission. Add me to a group to unlock the aura grind."
         )
         return
     
@@ -953,8 +953,8 @@ async def ghost_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not is_night_time_in_bangladesh():
         hours, minutes = get_time_until_night()
         await update.message.reply_text(
-            f"🌅 The ghost command only works during night time in Bangladesh (6 PM - 6 AM)!\n"
-            f"⏰ Come back in {hours}h {minutes}m when the darkness falls... 👻"
+            f"🌙 Ghost vibes only from 6 PM to 6 AM BD!\n"
+			f"⏰ Chill for {hours}h {minutes}m, then come flex with the shadows... 👻"
         )
         return
     
@@ -969,13 +969,13 @@ async def ghost_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not can_use:
         if reason == 'hourly_limit':
             await update.message.reply_text(
-                f"⏰ The spirits need time to rest! Wait an hour before summoning again..."
-            )
-        else:
-            await update.message.reply_text(
-                f"👻 You've already summoned a ghost today! The spirits will return tomorrow..."
-            )
-        return
+                f"⏰ Spirits gotta recharge! Hold up an hour before you summon again..."
+)
+		else:
+    		await update.message.reply_text(
+     		   f"👻 Ghost’s already been summoned today! They’re coming back tomorrow, so chill for now..."
+    )
+return
     
     # Check if we already have today's selection
     existing_selection = get_daily_selection(chat_id, command)
@@ -1010,7 +1010,7 @@ async def ghost_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if len(active_members) < 1:
         await update.message.reply_text(
-            "❌ Not enough active members in this chat for the spirits to haunt!"
+            "😭 Not enough squad energy here for the spirits to roll through! Get the crew up and try again!"
         )
         return
     
@@ -1020,7 +1020,7 @@ async def ghost_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if not selected_users:
         await update.message.reply_text(
-            "❌ The spirits couldn't find anyone to haunt. Try again later!"
+            "😭 Spirits came through but found no one to vibe with. Bounce back later and try again!"
         )
         return
     
@@ -1046,7 +1046,7 @@ async def ghost_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     final_message = message_template.format(user=selected_user_mention)
     
     # Add aura change info
-    final_message += f"\n\n💀 <b>{aura_change} aura points! The spirits are not pleased...</b>"
+    final_message += f"\n\n💀 <b>{aura_change} aura points! The spirits ain’t vibin’ with you...</b>"
     
     await update.message.reply_text(final_message, parse_mode=ParseMode.HTML)
     mark_command_used(user_id, chat_id, command)
@@ -1059,7 +1059,7 @@ async def aura_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Only work in groups
     if update.effective_chat.type == 'private':
         await update.message.reply_text(
-            "❌ Aura leaderboard only works in groups! Add me to a group to see rankings."
+            "🗿 Aura Farmers only grind in groups! Add me to a squad to see who’s flexing the most!"
         )
         return
     
@@ -1111,17 +1111,17 @@ async def on_startup(application: Application) -> None:
     Run once when the bot starts. Registers commands in Telegram's "/" menu.
     """
     commands = [
-        BotCommand("start", "Get started with Aura Bot"),
-        BotCommand("gay", "Find today's Gay of the Day"),
-        BotCommand("couple", "Discover today's perfect couple"),
-        BotCommand("simp", "Crown the biggest simp"),
-        BotCommand("toxic", "Identify the toxic member"),
-        BotCommand("cringe", "Find the cringe master"),
-        BotCommand("respect", "Show ultimate respect"),
-        BotCommand("sus", "Spot suspicious behavior"),
-        BotCommand("ghost", "Nighttime spooky selection"),
-        BotCommand("aura", "View the aura leaderboard"),
-    ]
+ 	   BotCommand("start", "⚡ Start the Aura grind"),
+	    BotCommand("gay", "🏳️‍🌈 Gay of the Day flex"),
+	    BotCommand("couple", "💞 Daily power duo"),
+	    BotCommand("simp", "🥺 Top simp alert"),
+	    BotCommand("toxic", "☠️ Biggest vibe killer"),
+	    BotCommand("cringe", "😬 Peak cringe spot"),
+	    BotCommand("respect", "🫡 Mad respect"),
+ 	   BotCommand("sus", "👀 Spot the sus"),
+	    BotCommand("ghost", "👻 Night spook summon"),
+	    BotCommand("aura", "📈 Aura Farmers rank"),
+]
     
     await application.bot.set_my_commands(commands)
     logger.info("Bot commands registered successfully")
