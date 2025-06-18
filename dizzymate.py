@@ -836,12 +836,12 @@ async def handle_couple_command(update: Update, context: ContextTypes.DEFAULT_TY
         if reason == 'hourly_limit':
             await update.message.reply_text(
                 f"⏳ Patience, boss! Wait an hour before hitting /{command} again 🦾"
-)
-		else:
-		    await update.message.reply_text(
-        f"⏳ You already ran /{command} today. Come back stronger tomorrow 👑"
-    )
-return
+            )
+        else:
+            await update.message.reply_text(
+                f"⏳ You already ran /{command} today. Come back stronger tomorrow 👑"
+            )
+        return
     
     # Check if we already have today's selection
     existing_selection = get_daily_selection(chat_id, command)
