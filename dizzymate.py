@@ -691,43 +691,42 @@ async def handle_single_user_command(update: Update, context: ContextTypes.DEFAU
     """Handle commands that select a single user."""
     if not update.effective_user or not update.effective_chat:
         return
-    
+
     # Only work in groups
     if update.effective_chat.type == 'private':
         await update.message.reply_text(
             "💀 This move’s for bosses in groups. Link me up and set fire to that aura. 🔥"
         )
         return
-    
+
     user = update.effective_user
     chat_id = update.effective_chat.id
     user_id = user.id
-    
+
     await typing_action(update, context)
-    
+
     # Add user to database
     user_info = extract_user_info(user)
     add_or_update_user(**user_info)
     update_member_activity(chat_id, user_id)
-    
-    # Check if user can use command
-can_use, reason = can_use_command(user_id, chat_id, command)
 
-if not can_use:
-    if reason == 'hourly_limit':
-        await update.message.reply_text(
-            f"⏳ Patience, boss! Wait an hour before hitting /{command} again 🦾"
-        )
-    else:
-        await update.message.reply_text(
-            f"⏳ You already ran /{command} today. Come back stronger tomorrow 👑"
-        )
-    return
-        
+    # ✅ Indented correctly now:
+    can_use, reason = can_use_command(user_id, chat_id, command)
+
+    if not can_use:
+        if reason == 'hourly_limit':
+            await update.message.reply_text(
+                f"⏳ Patience, boss! Wait an hour before hitting /{command} again 🦾"
+            )
+        else:
+            await update.message.reply_text(
+                f"⏳ You already ran /{command} today. Come back stronger tomorrow 👑"
+            )
+        return
+
     # Check if we already have today's selection
     existing_selection = get_daily_selection(chat_id, command)
     if existing_selection:
-        # Get user data for the existing selection
         with get_db_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -735,7 +734,7 @@ if not can_use:
                 FROM users WHERE user_id = ?
             """, (existing_selection['user_id'],))
             selected_user_data = cursor.fetchone()
-        
+
         if selected_user_data:
             selected_user_mention = get_user_mention_html_from_data(
                 existing_selection['user_id'],
@@ -743,56 +742,48 @@ if not can_use:
                 selected_user_data['first_name'],
                 selected_user_data['last_name']
             )
-            
-            # Choose random message
+
             message_template = random.choice(COMMAND_MESSAGES[command])
             final_message = message_template.format(user=selected_user_mention)
-            
+
             await update.message.reply_text(final_message, parse_mode=ParseMode.HTML)
             mark_command_used(user_id, chat_id, command)
             return
-    
-    # Get active chat members
+
     active_members = get_active_chat_members(chat_id)
-    
+
     if len(active_members) < 1:
         await update.message.reply_text(
             "💀 Can’t run this solo. Bring more energy to the chat 🦾"
         )
         return
-    
-    # Select random user using seeded selection for consistency
+
     seed = f"{chat_id}_{command}_{date.today().isoformat()}"
     selected_users = select_random_users_seeded(active_members, 1, seed)
-    
+
     if not selected_users:
         await update.message.reply_text(
             "😬 No cap, couldn’t find a user. Try again later, fam!"
         )
         return
-    
+
     selected_user = selected_users[0]
-    
-    # Save selection
+
     save_daily_selection(chat_id, command, selected_user['user_id'])
-    
-    # Update aura points
+
     aura_change = AURA_POINTS[command]
     update_aura_points(selected_user['user_id'], aura_change)
-    
-    # Create mention
+
     selected_user_mention = get_user_mention_html_from_data(
         selected_user['user_id'],
         selected_user['username'],
         selected_user['first_name'],
         selected_user['last_name']
     )
-    
-    # Choose random message and send
+
     message_template = random.choice(COMMAND_MESSAGES[command])
     final_message = message_template.format(user=selected_user_mention)
-    
-    # Add aura change info
+
     if aura_change > 0:
         final_message += f"\n\n🦾 <b>+{aura_change} aura points!</b> 👑"
     else:
