@@ -798,10 +798,10 @@ async def handle_single_user_command(update: Update, context: ContextTypes.DEFAU
     
     # Add aura change info
     if aura_change > 0:
-    final_message += f"\n\n🦾 <b>+{aura_change} aura points!</b> 👑"
-else:
-    final_message += f"\n\n💀 <b>{aura_change} aura points!</b> 🗡️"
-    
+        final_message += f"\n\n🦾 <b>+{aura_change} aura points!</b> 👑"
+    else:
+        final_message += f"\n\n💀 <b>{aura_change} aura points!</b> 🗡️"
+
     await update.message.reply_text(final_message, parse_mode=ParseMode.HTML)
     mark_command_used(user_id, chat_id, command)
 
